@@ -3,6 +3,7 @@ package com.greenroute.controller;
 import com.greenroute.model.Eletroposto;
 import com.greenroute.repository.EletropostoRepository;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EletropostoController {
@@ -10,12 +11,30 @@ public class EletropostoController {
     private EletropostoRepository eletropostoRepository = new EletropostoRepository();
     private Scanner scanner = new Scanner(System.in);
 
-    public Eletroposto[] getEletropostos() {
+    public ArrayList<Eletroposto> getEletropostos() {
         return eletropostoRepository.getEletropostos();
     }
 
     public int getQuantidadeEletropostos() {
         return eletropostoRepository.getQuantidadeEletropostos();
+    }
+
+    // MÉTODOS PÚBLICOS PARA USO PELA INTERFACE GRÁFICA
+
+    public void cadastrarEletroposto(Eletroposto eletroposto) {
+        eletropostoRepository.cadastrarEletroposto(eletroposto);
+    }
+
+    public Eletroposto buscarEletropostoPorId(int id) {
+        return eletropostoRepository.buscarEletroposto(id);
+    }
+
+    public boolean atualizarEletroposto(Eletroposto eletroposto) {
+        return eletropostoRepository.atualizarEletroposto(eletroposto);
+    }
+
+    public boolean removerEletropostoPorId(int id) {
+        return eletropostoRepository.removerEletroposto(id);
     }
 
     //MENU RESPONSAVEL PELO ELETROPOSTO
@@ -24,7 +43,6 @@ public class EletropostoController {
         int opcao;
 
         do {
-            System.out.println("=== MENU ELETROPOSTO ===");
             System.out.println("1 - Cadastrar Eletroposto");
             System.out.println("2 - Listar Eletropostos");
             System.out.println("3 - Buscar Eletroposto");
@@ -158,12 +176,10 @@ public class EletropostoController {
         System.out.println("Eletroposto cadastrado com sucesso!");
     }
 
-    //LISTAR OS ELETROPOSTOS DO ARRAY
     private void listarEletropostos() {
         eletropostoRepository.listarEletropostos();
     }
 
-    //BUSCAR O ELETROPOSTO CADASTRADO NO ARRAY
     private void buscarEletroposto() {
 
         System.out.print("Digite o ID do eletroposto que deseja buscar: ");
@@ -183,7 +199,6 @@ public class EletropostoController {
         }
     }
 
-    //ATUALIZAR O ELETROPOSTO CADASTRADO NO ARRAY
     private void atualizarEletroposto() {
 
         System.out.print("Digite o ID do eletroposto que deseja atualizar: ");
@@ -277,7 +292,6 @@ public class EletropostoController {
         }
     }
 
-    //REMOVER O ELETROPOSTO CADASTRADO NO ARRAY
     private void removerEletroposto() {
 
         System.out.print("Digite o ID do eletroposto que deseja remover: ");

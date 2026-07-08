@@ -2,57 +2,41 @@ package com.greenroute.repository;
 
 import com.greenroute.model.Cidade;
 
+import java.util.ArrayList;
+
 public class CidadeRepository {
 
-    private Cidade[] cidades = new Cidade[5];
-    private int quantidadeCidades;
+    private ArrayList<Cidade> cidades = new ArrayList<>();
 
-    //CADASTRAR NOVAS CIDADES QUANDO O ARRAY ESTIVER CHEIO
-    public void cadastrarCidade(Cidade cidade){
-
-        if (quantidadeCidades < cidades.length){
-            cidades[quantidadeCidades] = cidade;
-            quantidadeCidades++;
-        }
-        else {
-            Cidade[] arrayCidadeMaior = new Cidade[quantidadeCidades * 2];
-
-            for (int i = 0; i < cidades.length; i++){
-                arrayCidadeMaior[i] = cidades[i];
-            }
-
-            cidades = arrayCidadeMaior;
-            cidades[quantidadeCidades] = cidade;
-            quantidadeCidades++;
-        }
-
+    // CADASTRAR NOVA CIDADE
+    public void cadastrarCidade(Cidade cidade) {
+        cidades.add(cidade);
     }
 
-    //LISTAR AS CIDADES CADASTRADAS NO ARRAY
-    public void listarCidade(){
+    // LISTAR AS CIDADES CADASTRADAS
+    public void listarCidade() {
 
-        if (quantidadeCidades == 0){
+        if (cidades.isEmpty()) {
             System.out.println("Nenhuma cidade cadastrada!");
             return;
         }
 
-        for (int i = 0; i < quantidadeCidades; i++){
-            System.out.println(cidades[i]);
+        for (Cidade cidade : cidades) {
+            System.out.println(cidade);
         }
     }
 
-    //REMOVER A CIDADE CADASTRADA NO ARRAY
-    public boolean removerCidade(int id){
-        for (int i = 0; i < quantidadeCidades; i++){
-            if (id == cidades[i].getId()){
+    public ArrayList<Cidade> getCidades() {
+        return cidades;
+    }
 
-                for (int j = i; j < quantidadeCidades - 1; j++){
-                    cidades[j] = cidades[j + 1];
-                }
+    // REMOVER A CIDADE PELO ID
+    public boolean removerCidade(int id) {
 
-                cidades[quantidadeCidades - 1] = null;
-                quantidadeCidades--;
+        for (int i = 0; i < cidades.size(); i++) {
 
+            if (id == cidades.get(i).getId()) {
+                cidades.remove(i);
                 return true;
             }
         }
@@ -60,24 +44,30 @@ public class CidadeRepository {
         return false;
     }
 
-    //ATUALIZAR A CIDADE NO ARRAY PELO ID
-    public boolean atualizarCidade(Cidade cidadeAtualizada){
-        for (int i = 0; i < quantidadeCidades; i++){
-            if (cidadeAtualizada.getId() == cidades[i].getId()){
-                cidades[i] = cidadeAtualizada;
+    // ATUALIZAR A CIDADE PELO ID
+    public boolean atualizarCidade(Cidade cidadeAtualizada) {
+
+        for (int i = 0; i < cidades.size(); i++) {
+
+            if (cidadeAtualizada.getId() == cidades.get(i).getId()) {
+                cidades.set(i, cidadeAtualizada);
                 return true;
             }
         }
+
         return false;
     }
 
-    //BUSCAR CIDADE CADASTRADA NO ARRAY PELO ID
-    public Cidade buscarCidade(int id){
-        for (int i = 0; i < quantidadeCidades; i++){
-            if (id == cidades[i].getId()){
-                return cidades[i];
+    // BUSCAR CIDADE PELO ID
+    public Cidade buscarCidade(int id) {
+
+        for (Cidade cidade : cidades) {
+
+            if (id == cidade.getId()) {
+                return cidade;
             }
         }
+
         return null;
     }
 }

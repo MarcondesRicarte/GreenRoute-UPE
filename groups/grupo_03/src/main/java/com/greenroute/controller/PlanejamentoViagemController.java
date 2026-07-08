@@ -3,6 +3,8 @@ package com.greenroute.controller;
 import com.greenroute.model.Cidade;
 import com.greenroute.model.Eletroposto;
 import com.greenroute.model.Veiculo;
+import java.util.ArrayList;
+import com.greenroute.exception.AutonomiaInsuficienteException;
 
 import java.util.Scanner;
 
@@ -40,7 +42,16 @@ public class PlanejamentoViagemController {
             switch (opcao) {
 
                 case 1:
-                    planejarViagem();
+
+                    try {
+
+                        planejarViagem();
+
+                    } catch (AutonomiaInsuficienteException e) {
+                        System.out.println("\n=== ERRO ===");
+                        System.out.println(e.getMessage());
+                    }
+
                     break;
 
                 case 0:
@@ -52,10 +63,10 @@ public class PlanejamentoViagemController {
             }
 
         } while (opcao != 0);
-        sc.close();
+
     }
 
-    public void planejarViagem() {
+    public void planejarViagem() throws AutonomiaInsuficienteException {
 
         Scanner sc = new Scanner(System.in);
 
@@ -70,13 +81,11 @@ public class PlanejamentoViagemController {
 
         if (veiculo == null) {
             System.out.println("Veículo não encontrado!");
-            sc.close();
             return;
         }
 
         if (cidade == null) {
             System.out.println("Cidade não encontrada!");
-            sc.close();
             return;
         }
 
@@ -89,6 +98,7 @@ public class PlanejamentoViagemController {
         System.out.println("Autonomia Atual: " + autonomiaAtual + " km");
         System.out.println("Distância do destino: " + distanciaDestino + " km");
 
+        // Se possuir autonomia suficiente
         if (autonomiaAtual >= distanciaDestino) {
 
             double autonomiaRestante = autonomiaAtual - distanciaDestino;
@@ -97,51 +107,50 @@ public class PlanejamentoViagemController {
             System.out.println("Autonomia restante após a viagem: "
                     + autonomiaRestante + " km");
 
-        } else {
-
-            double distanciaFaltante = distanciaDestino - autonomiaAtual;
-
-            System.out.println("Autonomia insuficiente para chegar ao destino.");
-            System.out.println("Faltam " + distanciaFaltante
-                    + " km de autonomia para concluir a viagem.");
-
-            Eletroposto[] eletropostos =
-                    eletropostoController.getEletropostos();
-
-            int quantidade =
-                    eletropostoController.getQuantidadeEletropostos();
-
-            boolean encontrou = false;
-
-            System.out.println("\n=== ELETROPOSTOS DISPONÍVEIS ===");
-
-            for (int i = 0; i < quantidade; i++) {
-
-                if (eletropostos[i].getCidadeId() == cidade.getId()) {
-
-                    encontrou = true;
-
-                    System.out.println("--------------------------------");
-                    System.out.println("Nome: "
-                            + eletropostos[i].getNome());
-                    System.out.println("Localização: "
-                            + eletropostos[i].getLocalizacao());
-                    System.out.println("Conectores: "
-                            + eletropostos[i].getTiposConectoresDisponiveis());
-                    System.out.println("Potência: "
-                            + eletropostos[i].getPotenciaCargaKw() + " kW");
-                    System.out.println("Preço por kWh: R$ "
-                            + eletropostos[i].getPrecoPorKwh());
-                    System.out.println("Vagas disponíveis: "
-                            + eletropostos[i].getVagasDisponiveis());
-                }
-            }
-
-            if (!encontrou) {
-                System.out.println(
-                        "Nenhum eletroposto encontrado para esta cidade.");
-            }
-        sc.close();
+            return;
         }
+
+        // Se NÃO possuir autonomia suficiente
+
+        double distanciaFaltante = distanciaDestino - autonomiaAtual;
+
+        System.out.println("Autonomia insuficiente para chegar ao destino.");
+        System.out.println("Faltam " + distanciaFaltante
+                + " km de autonomia para concluir a viagem.");
+
+        ArrayList<Eletroposto> eletropostos =
+                eletropostoController.getEletropostos();
+
+        boolean encontrou = false;
+
+        System.out.println("\n=== ELETROPOSTOS DISPONÍVEIS ===");
+
+        for (Eletroposto eletroposto : eletropostos) {
+
+            if (eletroposto.getCidadeId() == cidade.getId()) {
+
+                encontrou = true;
+
+                System.out.println("--------------------------------");
+                System.out.println("Nome: " + eletroposto.getNome());
+                System.out.println("Localização: " + eletroposto.getLocalizacao());
+                System.out.println("Conectores: "
+                        + eletroposto.getTiposConectoresDisponiveis());
+                System.out.println("Potência: "
+                        + eletroposto.getPotenciaCargaKw() + " kW");
+                System.out.println("Preço por kWh: R$ "
+                        + eletroposto.getPrecoPorKwh());
+                System.out.println("Vagas disponíveis: "
+                        + eletroposto.getVagasDisponiveis());
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhum eletroposto encontrado para esta cidade.");
+        }
+
+        throw new AutonomiaInsuficienteException(
+                "Autonomia insuficiente para concluir a viagem."
+        );
     }
 }

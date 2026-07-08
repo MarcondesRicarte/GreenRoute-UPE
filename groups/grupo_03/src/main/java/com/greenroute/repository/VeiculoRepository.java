@@ -1,68 +1,85 @@
 package com.greenroute.repository;
 
 import com.greenroute.model.Veiculo;
+import java.util.ArrayList;
 
 public class VeiculoRepository {
-    private Veiculo[] veiculos;
+
+    private ArrayList<Veiculo> veiculos;
     private int quantidade;
 
     public VeiculoRepository() {
-        veiculos = new Veiculo[10];
+        veiculos = new ArrayList<>();
         quantidade = 0;
     }
 
     public void adicionar(Veiculo veiculo) {
-        if (quantidade < veiculos.length) {
-            veiculos[quantidade] = veiculo;
-            quantidade++;
-        }
+        veiculos.add(veiculo);
+        quantidade++;
     }
 
     public Veiculo buscar(int id) {
-        for (int i = 0; i < quantidade; i++) {
-            if (veiculos[i].getId() == id) {
-                return veiculos[i];
+        Veiculo veiculo = null;
+        for (Veiculo v : veiculos) {
+            if (v.getId() == id) {
+                veiculo = v;
             }
         }
 
-        return null;
+        return veiculo;
     }
 
     public void atualizar(int id, Veiculo veiculo) {
-        for (int i = 0; i < quantidade; i++) {
-
-            if (veiculos[i].getId() == id) {
-                veiculos[i] = veiculo;
-                return;
+        int count = 0;
+        for (Veiculo v : veiculos) {
+            if (v.getId() == id) {
+                veiculos.set(count, veiculo);
             }
+            count++;
         }
+
+        System.out.println("Veículo não encontrado");
     }
 
-    public void remover(int id) {
-        for (int i = 0; i < quantidade; i++) {
+    public boolean remover(int id) {
+        for (int i = 0; i < veiculos.size(); i++) {
 
-            if (veiculos[i].getId() == id) {
+            if (veiculos.get(i).getId() == id) {
 
-                for (int j = i; j < quantidade - 1; j++) {
-                    veiculos[j] = veiculos[j + 1];
-                }
-
-                veiculos[quantidade - 1] = null;
+                veiculos.remove(i);
                 quantidade--;
+                return true;
 
-                return;
             }
+
         }
+
+        return false;
     }
 
-    public void listar() {
+    public ArrayList<Veiculo> listar() {
+        return veiculos;
+        /* 
         System.out.println("=== LISTA DE VEÍCULOS ===");
-        for (int i = 0; i < quantidade; i++) {
-            System.out.println("Veículo: " + veiculos[i].getModelo() + " - ID: " + veiculos[i].getId() + " - Autonomia: " + veiculos[i].calcularAutonomia() + " km");
+        for (Veiculo veiculo : veiculos) {
+            System.out.println("Veículo: " + veiculo.getModelo() + " - ID: " + veiculo.getId() + " - Autonomia: " + veiculo.calcularAutonomia() + " km");
         }
+        */
     }
 
     public int getQuantidade() {
         return quantidade;
+    }
+
+    public boolean existeId(int id) {
+        for (Veiculo veiculo : veiculos) {
+
+            if (veiculo.getId() == id) {
+                return true;
+            }
+
+        }
+
+        return false;
     }
 }

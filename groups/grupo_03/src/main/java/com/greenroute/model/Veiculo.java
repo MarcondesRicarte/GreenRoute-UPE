@@ -75,6 +75,7 @@ public abstract class Veiculo {
     public String toString() {
         return "ID: " + id +
             ", Modelo: " + modelo +
-            ", Autonomia: " + calcularAutonomia() + " km";
+            ", Autonomia: " + calcularAutonomia() + " km" +
+            ", ";
     }
 }

@@ -2,67 +2,45 @@ package com.greenroute.repository;
 
 import com.greenroute.model.Eletroposto;
 
+import java.util.ArrayList;
+
 public class EletropostoRepository {
 
-    private Eletroposto[] eletropostos = new Eletroposto[5];
-    private int quantidadeEletropostos;
+    private ArrayList<Eletroposto> eletropostos = new ArrayList<>();
 
-    public Eletroposto[] getEletropostos() {
+    public ArrayList<Eletroposto> getEletropostos() {
         return eletropostos;
     }
 
     public int getQuantidadeEletropostos() {
-        return quantidadeEletropostos;
+        return eletropostos.size();
     }
 
-    // CADASTRAR ELETROPOSTO NO ARRAY
+    // CADASTRAR ELETROPOSTO
     public void cadastrarEletroposto(Eletroposto eletroposto) {
-
-        if (quantidadeEletropostos < eletropostos.length) {
-            eletropostos[quantidadeEletropostos] = eletroposto;
-            quantidadeEletropostos++;
-        } else {
-
-            Eletroposto[] arrayEletropostoMaior =
-                    new Eletroposto[quantidadeEletropostos * 2];
-
-            for (int i = 0; i < eletropostos.length; i++) {
-                arrayEletropostoMaior[i] = eletropostos[i];
-            }
-
-            eletropostos = arrayEletropostoMaior;
-            eletropostos[quantidadeEletropostos] = eletroposto;
-            quantidadeEletropostos++;
-        }
+        eletropostos.add(eletroposto);
     }
 
-    // LISTAR ELETROPOSTOS CADASTRADOS NO ARRAY
+    // LISTAR ELETROPOSTOS
     public void listarEletropostos() {
 
-        if (quantidadeEletropostos == 0) {
+        if (eletropostos.isEmpty()) {
             System.out.println("Nenhum eletroposto cadastrado!");
             return;
         }
 
-        for (int i = 0; i < quantidadeEletropostos; i++) {
-            System.out.println(eletropostos[i]);
+        for (Eletroposto eletroposto : eletropostos) {
+            System.out.println(eletroposto);
         }
     }
 
-    // REMOVER ELETROPOSTO CADASTRADO NO ARRAY
+    // REMOVER ELETROPOSTO
     public boolean removerEletroposto(int id) {
 
-        for (int i = 0; i < quantidadeEletropostos; i++) {
+        for (int i = 0; i < eletropostos.size(); i++) {
 
-            if (id == eletropostos[i].getId()) {
-
-                for (int j = i; j < quantidadeEletropostos - 1; j++) {
-                    eletropostos[j] = eletropostos[j + 1];
-                }
-
-                eletropostos[quantidadeEletropostos - 1] = null;
-                quantidadeEletropostos--;
-
+            if (id == eletropostos.get(i).getId()) {
+                eletropostos.remove(i);
                 return true;
             }
         }
@@ -70,14 +48,13 @@ public class EletropostoRepository {
         return false;
     }
 
-    // ATUALIZAR ELETROPOSTO CADASTRADO NO ARRAY
+    // ATUALIZAR ELETROPOSTO
     public boolean atualizarEletroposto(Eletroposto eletropostoAtualizado) {
 
-        for (int i = 0; i < quantidadeEletropostos; i++) {
+        for (int i = 0; i < eletropostos.size(); i++) {
 
-            if (eletropostoAtualizado.getId() == eletropostos[i].getId()) {
-
-                eletropostos[i] = eletropostoAtualizado;
+            if (eletropostoAtualizado.getId() == eletropostos.get(i).getId()) {
+                eletropostos.set(i, eletropostoAtualizado);
                 return true;
             }
         }
@@ -85,13 +62,13 @@ public class EletropostoRepository {
         return false;
     }
 
-    // BUSCAR ELETROPOSTO POR ID CADASTRADO NO ARRAY
+    // BUSCAR ELETROPOSTO
     public Eletroposto buscarEletroposto(int id) {
 
-        for (int i = 0; i < quantidadeEletropostos; i++) {
+        for (Eletroposto eletroposto : eletropostos) {
 
-            if (id == eletropostos[i].getId()) {
-                return eletropostos[i];
+            if (id == eletroposto.getId()) {
+                return eletroposto;
             }
         }
 
