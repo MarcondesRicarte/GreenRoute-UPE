@@ -1,0 +1,17 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+/out/
+
+# Maven
+/target/
+
+# Chave da API Gemini
+.env
+
+# Arquivos temporários
+/shelf/
+/httpRequests/
+/queries/
+/dataSources/
+/dataSources.local.xml
