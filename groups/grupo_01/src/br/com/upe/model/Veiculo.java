@@ -35,4 +35,9 @@ public abstract class Veiculo {
 
     public int getTempoRecargaCompleta() { return tempoRecargaCompleta; }
     public void setTempoRecargaCompleta(int tempoRecargaCompleta) { this.tempoRecargaCompleta = tempoRecargaCompleta; }
+
+    @Override
+    public String toString() {
+        return this.modelo + " (Autonomia: " + this.autonomiaMaxima + "km | Carga: " + this.cargaBateriaAtual + "%)";
+    }
 }

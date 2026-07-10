@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import br.com.upe.controller.RotaController;
 import br.com.upe.repository.CidadeRepository;
 import br.com.upe.repository.EletropostoRepository;
 import br.com.upe.repository.VeiculoRepository;
@@ -19,7 +21,7 @@ public class Principal {
         CidadeController cidadeController = new CidadeController(cidadeRepo);
         EletropostoController eletropostoController = new EletropostoController(eletropostoRepo, cidadeRepo);
         VeiculoController veiculoController = new VeiculoController(veiculoRepo, cidadeRepo, eletropostoRepo);
-
+        RotaController rotaController = new RotaController(veiculoRepo, cidadeRepo, eletropostoRepo);
         do {
             chamar.CRUDPrincipal();
             escolhaPrincipal = leitura.nextInt();
@@ -208,7 +210,7 @@ public class Principal {
                     int veiculoId = leitura.nextInt();
                     System.out.print("Digite o ID da Cidade de Destino: ");
                     int cidadeId = leitura.nextInt();
-                    veiculoController.simularViagem(veiculoId, cidadeId);
+                    rotaController.simularViagem(veiculoId, cidadeId);
                     break;
                 case 5:
                     System.out.println("Encerrando o sistema GreenRoute...");

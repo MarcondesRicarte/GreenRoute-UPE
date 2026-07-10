@@ -8,6 +8,7 @@ import br.com.upe.model.Eletroposto;
 import br.com.upe.repository.VeiculoRepository;
 import br.com.upe.repository.CidadeRepository;
 import br.com.upe.repository.EletropostoRepository;
+import java.util.List;
 
 public class VeiculoController {
     private VeiculoRepository veiculoRepo;
@@ -119,61 +120,5 @@ public class VeiculoController {
             System.out.println("\n[ERRO] Falha ao excluir. Veículo com ID " + id + " não existe!");
         }
         return excluiu;
-    }
-
-    public void simularViagem(int veiculoId, int cidadeId) {
-        Veiculo veiculo = veiculoRepo.buscarVeiculo(veiculoId);
-        Cidade cidade = cidadeRepo.buscarCidade(cidadeId);
-
-        if (veiculo == null) {
-            System.out.println("\n[ERRO] Simulação abortada. Veículo não encontrado!");
-            return;
-        }
-        if (cidade == null) {
-            System.out.println("\n[ERRO] Simulação abortada. Cidade de destino não encontrada!");
-            return;
-        }
-
-        double autonomiaAtual = veiculo.getAutonomiaMaxima() * (veiculo.getCargaBateriaAtual() / 100.0);
-        double distanciaNecessaria = cidade.getDistanciaDaCapital();
-
-        System.out.println("\n=============================================");
-        System.out.println("        SIMULAÇÃO DE ROTA - GREENROUTE       ");
-        System.out.println("=============================================");
-        System.out.println("Veículo selecionado: " + veiculo.getModelo());
-        System.out.println("Cidade de destino:   " + cidade.getNome() + " (" + cidade.getEstado() + ")");
-        System.out.println("Distância total:     " + distanciaNecessaria + " km");
-        System.out.printf("Autonomia atual:     %.2f km\n", autonomiaAtual);
-        System.out.println("---------------------------------------------");
-
-        if (autonomiaAtual >= distanciaNecessaria) {
-            System.out.println("[SUCESSO] Viagem viável! O veículo consegue chegar ao destino sem reabastecer.");
-        } else {
-            System.out.println("[ALERTA] Autonomia INSUFICIENTE para completar a viagem diretamente!");
-            System.out.println("A procurar eletropostos sugeridos na cidade/rota para paragem...");
-
-            boolean encontrouEletroposto = false;
-
-            Eletroposto[] todosEletropostos = eletropostoRepo.getEletropostos();
-            int totalEletropostos = eletropostoRepo.getContador();
-
-            for (int i = 0; i < totalEletropostos; i++) {
-                if (todosEletropostos[i].getCidadeId() == cidadeId) {
-                    if (!encontrouEletroposto) {
-                        System.out.println("\n[SUGESTÃO] Encontrámos o(s) seguinte(s) eletroposto(s) para recarga:");
-                        encontrouEletroposto = true;
-                    }
-                    Eletroposto ep = todosEletropostos[i];
-                    System.out.println("-> Nome: " + ep.getNome() + " | Localização: " + ep.getLocalizacao() +
-                            " | Conectores: [" + ep.getTiposConectoresDisponiveis() + "]" +
-                            " | Potência: " + ep.getPotenciaCargaKw() + "kW | Preço: R$" + ep.getPrecoPorKwh() + "/kWh");
-                }
-            }
-
-            if (!encontrouEletroposto) {
-                System.out.println("\n[PERIGO] Nenhum eletroposto cadastrado para o ID da cidade " + cidadeId + ". Planeie outra rota!");
-            }
-        }
-        System.out.println("=============================================\n");
     }
 }

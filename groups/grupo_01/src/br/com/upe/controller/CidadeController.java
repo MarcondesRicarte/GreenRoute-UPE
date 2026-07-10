@@ -1,7 +1,7 @@
 package br.com.upe.controller;
 import br.com.upe.model.Cidade;
 import br.com.upe.repository.CidadeRepository;
-
+import java.util.List;
 public class CidadeController {
 
     private CidadeRepository repository;

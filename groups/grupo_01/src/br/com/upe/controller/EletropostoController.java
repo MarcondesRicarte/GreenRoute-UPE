@@ -2,7 +2,7 @@ package br.com.upe.controller;
 import br.com.upe.model.Eletroposto;
 import br.com.upe.repository.EletropostoRepository;
 import br.com.upe.repository.CidadeRepository;
-
+import java.util.List;
 public class EletropostoController {
     private EletropostoRepository eletropostoRepo;
     private CidadeRepository cidadeRepo; // Permite validar se a cidade informada existe no sistema

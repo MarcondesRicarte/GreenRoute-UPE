@@ -26,5 +26,10 @@ public class Cidade {
 
     public double getDistanciaDaCapital() { return distanciaDaCapital; }
     public void setDistanciaDaCapital(double distanciaDaCapital) { this.distanciaDaCapital = distanciaDaCapital; }
+
+    @Override
+    public String toString() {
+        return this.nome + " - " + this.estado + " (" + this.distanciaDaCapital + " km da Capital)";
+    }
 }
 

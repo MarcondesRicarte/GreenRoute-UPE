@@ -47,4 +47,9 @@ public class Eletroposto {
 
     public int getVagasDisponiveis() { return vagasDisponiveis; }
     public void setVagasDisponiveis(int vagasDisponiveis) { this.vagasDisponiveis = vagasDisponiveis; }
+
+    @Override
+    public String toString() {
+        return this.nome + " (" + this.localizacao + " | " + this.potenciaCargaKw + "kW)";
+    }
 }
