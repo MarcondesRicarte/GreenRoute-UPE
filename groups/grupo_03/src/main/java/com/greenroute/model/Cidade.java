@@ -9,7 +9,7 @@ public class Cidade {
 
     //CONSTRUTOR
 
-    public Cidade(int id, String nome, String estado, double distanciaDaCapital){
+    public Cidade(int id, String nome, String estado, double distanciaDaCapital) {
         this.id = id;
         this.nome = nome;
         this.estado = estado;
@@ -18,17 +18,20 @@ public class Cidade {
 
     //CRIANDO OS GETTERS
 
-    public int getId(){
+    public int getId() {
         return id;
     }
-    public String getNome(){
+
+    public String getNome() {
         return nome;
     }
-    public String getEstado(){
+
+    public String getEstado() {
         return estado;
     }
-    public double getDistanciaDaCapital(){
-        return  distanciaDaCapital;
+
+    public double getDistanciaDaCapital() {
+        return distanciaDaCapital;
     }
 
     //CRIANDO OS SETTERS
@@ -36,20 +39,25 @@ public class Cidade {
     public void setId(int id) {
         this.id = id;
     }
-    public void setNome(String nome){
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
-    public void setEstado(String estado){
+
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-    public void setDistanciaDaCapital( double distanciaDaCapital){
+
+    public void setDistanciaDaCapital(double distanciaDaCapital) {
         this.distanciaDaCapital = distanciaDaCapital;
     }
 
     @Override
-    public String toString(){
-        return "Cidade{ id=" + id + ", nome=" + nome + ", estado=" + estado + ", distanciaDaCapital=" + distanciaDaCapital + "km}";
+    public String toString() {
+        return "ID: " + id +
+                ", Nome: " + nome +
+                ", Estado: " + estado +
+                ", Distância da Capital: " + distanciaDaCapital + " km";
     }
-
 }
 

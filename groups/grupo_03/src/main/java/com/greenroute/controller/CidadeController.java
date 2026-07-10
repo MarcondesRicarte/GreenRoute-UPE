@@ -3,6 +3,7 @@ package com.greenroute.controller;
 import com.greenroute.repository.CidadeRepository;
 import java.util.Scanner;
 import com.greenroute.model.Cidade;
+import java.util.ArrayList;
 
 public class CidadeController {
 
@@ -21,7 +22,6 @@ public class CidadeController {
         int opcao;
 
         do {
-            System.out.println("=== MENU CIDADE ===");
             System.out.println("1 - Cadastrar Cidade");
             System.out.println("2 - Listar Cidades");
             System.out.println("3 - Buscar Cidade");
@@ -169,5 +169,30 @@ public class CidadeController {
         } else {
             System.out.println("Cidade não encontrada!");
         }
+    }
+
+    // Cadastrar cidade pela GUI
+
+    public void cadastrarCidade(Cidade cidade) {
+        cidadeRepository.cadastrarCidade(cidade);
+    }
+
+    // Listar cidades para a GUI
+    public ArrayList<Cidade> listarCidades() {
+        return cidadeRepository.getCidades();
+    }
+    // Buscar cidade pela GUI
+    public Cidade buscarCidadePorId(int id) {
+        return cidadeRepository.buscarCidade(id);
+    }
+    // Atualizar cidade pela GUI
+
+
+    public boolean atualizarCidade(Cidade cidade) {
+        return cidadeRepository.atualizarCidade(cidade);
+    }
+    // Remover cidade pela GUI
+    public boolean removerCidadePorId(int id) {
+        return cidadeRepository.removerCidade(id);
     }
 }

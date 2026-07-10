@@ -81,16 +81,14 @@ public class Eletroposto {
     }
 
     @Override
-    public String toString(){
-        return "Eletroposto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", localizacao='" + localizacao + '\'' +
-                ", cidadeId=" + cidadeId +
-                ", tiposConectoresDisponiveis='" + tiposConectoresDisponiveis + '\'' +
-                ", potenciaCargaKw=" + potenciaCargaKw +
-                ", precoPorKwh=" + precoPorKwh +
-                ", vagasDisponiveis=" + vagasDisponiveis +
-                '}';
+    public String toString() {
+        return "ID: " + id +
+                ", Nome: " + nome +
+                ", Localização: " + localizacao +
+                ", Cidade ID: " + cidadeId +
+                ", Conectores: " + tiposConectoresDisponiveis +
+                ", Potência: " + potenciaCargaKw + " kW" +
+                ", Preço por kWh: R$ " + precoPorKwh +
+                ", Vagas Disponíveis: " + vagasDisponiveis;
     }
 }
